@@ -1,0 +1,23 @@
+{
+  "name": "suporte-mcp",
+  "version": "1.0.0",
+  "description": "Servidor MCP via HTTP com as ferramentas consultar_cte e abrir_chamado",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc",
+    "start": "node src/main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.0",
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2"
+  }
+}

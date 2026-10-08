@@ -1,0 +1,43 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: poc
+      POSTGRES_PASSWORD: poc
+      POSTGRES_DB: suporte
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U poc -d suporte"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+  mcp:
+    build: ./suporte-mcp
+    pull_policy: build
+    ports:
+      - "3333:3333"
+    environment:
+      MCP_TOKEN: ${MCP_TOKEN}
+      MCP_PORTA: 3333
+  chat:
+    build: ./suporte-poc
+    pull_policy: build
+    ports:
+      - "3000:3000"
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ANTHROPIC_MODEL: claude-haiku-4-5
+      DATABASE_URL: postgresql://poc:poc@db:5432/suporte
+      API_PORT: 3000
+      MCP_URL: http://mcp:3333/mcp
+      MCP_TOKEN: ${MCP_TOKEN}
+    depends_on:
+      db:
+        condition: service_healthy
+      mcp:
+        condition: service_started
+volumes:
+  pgdata:

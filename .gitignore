@@ -1,0 +1,9 @@
+# dependencias (suporte-poc e suporte-mcp)
+node_modules/
+
+# segredos locais -- .env-modelo continua versionado
+.env
+
+# lixo do sistema / logs
+.DS_Store
+npm-debug.log*
